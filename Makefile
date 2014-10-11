@@ -16,7 +16,7 @@ HEADERS = $(wildcard *.h)
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) $(CFLAGS) $(LIBS) -o $@
 
-test:
+test: $(TARGET)
 	test/hello_test.py
 
 clean:
