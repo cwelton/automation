@@ -23,7 +23,7 @@ pgstart: pgstop
 	pg_config
 
 pgstop:
-	which postgres
+	which psql
 
 clean:
 	rm -f *.o
