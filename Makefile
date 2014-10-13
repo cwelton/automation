@@ -23,6 +23,7 @@ pgstart: pgstop
 	pg_config
 
 pgstop:
+	env
 	which psql
 
 clean:
