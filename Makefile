@@ -16,7 +16,7 @@ HEADERS = $(wildcard *.h)
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) $(CFLAGS) $(LIBS) -o $@
 
-test: $(TARGET)
+test: $(TARGET) pgstart
 	test/hello_test.py
 
 pgstart: pgstop
