@@ -3,7 +3,7 @@ LIBS   =
 CC     = gcc
 CFLAGS = -Wall
 
-.PHONY: all clean test
+.PHONY: all clean test pgstart pgstop
 
 all: $(TARGET)
 
@@ -18,6 +18,12 @@ $(TARGET): $(OBJECTS)
 
 test: $(TARGET)
 	test/hello_test.py
+
+pgstart: pgstop
+	pg_config
+
+pgstop:
+	which postgres
 
 clean:
 	rm -f *.o
