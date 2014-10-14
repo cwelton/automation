@@ -12,10 +12,10 @@ before_script:
 
   # Start our own version of postgres
   - PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
-  - pg_ctl -D /usr/share/postgresql/$PGVERSION start
   
 script:
-  - ls /usr/lib/postgresql/$PGVERVIOS/lib
+  - ls /usr/lib/postgresql/$PGVERSION/lib
+  - pg_ctl -w -D /usr/share/postgresql/$PGVERSION start
   - python --version
   - psql -c "create language plpythonu; create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd(), version()"  template1
   
