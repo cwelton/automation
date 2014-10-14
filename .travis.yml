@@ -1,8 +1,14 @@
 language: c
 
+addons:
+    postgresql: "9.3"
+
 env:
   - PGVERSION=9.1
   - PGVERSION=9.2
 
 script:
+  - env
+  - which psql
+  - psql -e "select version()"
   - make test

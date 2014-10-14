@@ -16,15 +16,8 @@ HEADERS = $(wildcard *.h)
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) $(CFLAGS) $(LIBS) -o $@
 
-test: $(TARGET) pgstart
+test: $(TARGET)
 	test/hello_test.py
-
-pgstart: pgstop
-	pg_config
-
-pgstop:
-	env
-	which psql
 
 clean:
 	rm -f *.o
