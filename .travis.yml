@@ -6,7 +6,7 @@ env:
 #  - PGVERSION=9.3
 
 before_script:
-  - export PATH=/usr/lib/postgresql/$PGVERSION:$PATH
+  - export PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
   - sudo /etc/init.d/postgresql stop
   - sudo /etc/init.d/postgresql start $PGVERSION
   - sudo apt-get install postgresql-plpython-$PGVERSION
