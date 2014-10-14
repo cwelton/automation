@@ -1,14 +1,13 @@
 language: c
 
 env:
-  - PGVERSION=9.1
+#  - PGVERSION=9.1
+  - PGVERSION=9.2
 
 before_script:
   - PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
-  
-  
-script:
-  - env
   - which psql
   - psql -c "select version()" template1
+  
+script:
   - make test
