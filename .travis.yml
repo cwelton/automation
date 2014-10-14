@@ -10,5 +10,5 @@ before_script:
 script:
   - env
   - which psql
-  - /usr/lib/postgresql/9.3/bin/psql -c "select version()"
+  - psql -c "select version()" template1
   - make test
