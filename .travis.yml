@@ -12,7 +12,7 @@ before_script:
 
   # Start our own version of postgres
   - PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
-  - psql -c "create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd()"  template1
+  - psql -c "create language plpythonu; create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd()"  template1
   
 script:
   - make test
