@@ -5,9 +5,14 @@ env:
   - PGVERSION=9.2
 
 before_script:
+  # Stop the initial travis db and prevent it from coming back
+  #- sudo service postgresql stop
+  #- echo 'exit 0' | sudo tee /etc/init.d/postgresql
+  #- sudo chmod a+x /etc/init.d/postgresql
+
+  # Start our own version of postgres
   - PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
-  - which psql
-  - psql -c "select version()" template1
+  - psql -c "create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd()"  template1
   
 script:
   - make test
