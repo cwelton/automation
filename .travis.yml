@@ -2,21 +2,16 @@ language: c
 
 env:
 #  - PGVERSION=9.1
-  - PGVERSION=9.2
+#  - PGVERSION=9.2
+  - PGVERSION=9.3
 
 before_script:
-  # Stop the initial travis db and prevent it from coming back
-  - sudo service postgresql stop
-  - echo 'exit 0' | sudo tee /etc/init.d/postgresql
-  - sudo chmod a+x /etc/init.d/postgresql
-
-  # Start our own version of postgres
-  - PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
+  # Start the correct version of postgres
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start $PGVERSION  
   
 script:
-  - ls /usr/lib/postgresql/$PGVERSION/lib
-  - ls /usr/share/postgresql/*
-  - pg_ctl -w -D /usr/share/postgresql/$PGVERSION start
+  - pg_config
   - python --version
   - psql -c "create language plpythonu; create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd(), version()"  template1
   
