@@ -6,13 +6,12 @@ env:
 #  - PGVERSION=9.3
 
 before_script:
-  # Start the correct version of postgres
+  - export PATH=/usr/lib/postgresql/$PGVERSION:$PATH
   - sudo /etc/init.d/postgresql stop
   - sudo /etc/init.d/postgresql start $PGVERSION
   - sudo apt-get install postgresql-plpython-$PGVERSION
   
 script:
   - which psql
-  - psql -c "create language plpythonu; create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd(), version()"  template1
-  
+  - psql --version
   - make test
