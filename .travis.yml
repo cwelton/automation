@@ -2,8 +2,8 @@ language: c
 
 env:
 #  - PGVERSION=9.1
-#  - PGVERSION=9.2
-  - PGVERSION=9.3
+  - PGVERSION=9.2
+#  - PGVERSION=9.3
 
 before_script:
   # Start the correct version of postgres
@@ -12,8 +12,7 @@ before_script:
   - sudo apt-get install postgresql-plpython-$PGVERSION
   
 script:
-  - pg_config
-  - python --version
+  - which psql
   - psql -c "create language plpythonu; create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd(), version()"  template1
   
   - make test
