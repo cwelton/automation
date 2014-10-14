@@ -15,6 +15,7 @@ before_script:
   
 script:
   - ls /usr/lib/postgresql/$PGVERSION/lib
+  - ls /usr/share/postgresql
   - pg_ctl -w -D /usr/share/postgresql/$PGVERSION start
   - python --version
   - psql -c "create language plpythonu; create function pwd() returns text as 'import os;return os.getcwd()' language plpythonu; SELECT pwd(), version()"  template1
