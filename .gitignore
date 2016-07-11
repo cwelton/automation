@@ -1,6 +1,9 @@
 # main target
 hello
 
+# Ignore Build directory
+/build
+
 # Object files
 *.o
 *.ko

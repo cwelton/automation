@@ -1,17 +1,12 @@
-language: c
+language: cpp
 
-env:
-#  - PGVERSION=9.1
-  - PGVERSION=9.2
-#  - PGVERSION=9.3
-
-before_script:
-  - export PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
-  - sudo /etc/init.d/postgresql stop
-  - sudo /etc/init.d/postgresql start $PGVERSION
-  - sudo apt-get install postgresql-plpython-$PGVERSION
+compiler:
+  - clang
+  - gcc
   
 script:
   - which psql
   - psql --version
-  - make test
+  - mkdir build
+  - cd build && cmake .. && make
+
