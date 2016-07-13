@@ -1,8 +1,8 @@
-# main target
-hello
-
-# Ignore Build directory
-/build
+# Generated artifacts of build processes
+env/.bash_history
+env/.lesshst
+env/build
+env/automation/compile_commands.json
 
 # Object files
 *.o
@@ -36,3 +36,7 @@ hello
 *.i*86
 *.x86_64
 *.hex
+
+# Emacs save files
+*~
+.[#]*

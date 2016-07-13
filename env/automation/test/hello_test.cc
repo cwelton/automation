@@ -4,13 +4,9 @@
 namespace AutomationTest {
 
 class TestFixture : public ::testing::Test {
-
 protected:
-	TestFixture() = default;
-	virtual ~TestFixture() = default;
-	virtual void SetUp() { }
+	virtual void SetUp() {}
 	virtual void TearDown() {}
-
 };
 
 TEST_F(TestFixture, ExampleTest) {
