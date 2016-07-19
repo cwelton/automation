@@ -10,8 +10,10 @@ RUN apt-get update
 # -- Install Dependencies and tools ------------------------------------------
 RUN apt-get install -y sudo man wget
 RUN apt-get install -y build-essential cmake lcov
-RUN apt-get install -y python
+RUN apt-get install -y python python-dev python-pip
 RUN apt-get install -y git emacs vim
+RUN pip install --upgrade pip
+RUN pip install gcovr
 
 # -- static code analysis tool oclint:   http://oclint.org/
 WORKDIR /opt

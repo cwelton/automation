@@ -13,7 +13,7 @@ lint: build/compile_commands.json
 coverage:
 	@mkdir -p build
 	cd build && cmake -DCMAKE_BUILD_TYPE=Coverage ../automation
-	$(MAKE) -C build
+	$(MAKE) -C build all coverage
 
 clean:
 	@rm -rf build

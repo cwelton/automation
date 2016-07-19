@@ -32,7 +32,9 @@ endif()
 if( CMAKE_BUILD_TYPE STREQUAL "Coverage" )
   include( CodeCoverage )
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage" )
-  setup_target_for_coverage( coverage ctest coverage )
+  #setup_target_for_coverage( coverage ctest coverage )
+  FIND_PROGRAM( PYTHON_EXECUTABLE python )
+  setup_target_for_coverage_cobertura( coverage ctest coverage )
 endif()
 
 # -- Process all subdirectories ------------------------------------------------
