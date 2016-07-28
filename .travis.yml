@@ -5,6 +5,6 @@ compiler:
   - gcc
   
 script:
-  - mkdir build && cd build
-  - cmake ..
-  - make all test
+  - sudo bin/dependencies.sh
+  - cd project
+  - make all

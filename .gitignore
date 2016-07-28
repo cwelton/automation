@@ -1,9 +1,9 @@
 # Generated artifacts of build processes
-env/.bash_history
-env/.lesshst
-env/.cache
-env/build
-env/automation/compile_commands.json
+project/build
+project/compile_commands.json
+
+# Vagrant artifacts
+.vagrant
 
 # Object files
 *.o
