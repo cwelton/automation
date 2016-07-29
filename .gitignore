@@ -1,6 +1,6 @@
 # Generated artifacts of build processes
-project/build
-project/compile_commands.json
+build
+compile_commands.json
 
 # Vagrant artifacts
 .vagrant

@@ -7,5 +7,5 @@ matrix:
       env: COMPILER=g++-4.9
 
 script:
-  - ${TRAVIS_BUILD_DIR}/bin/dependencies.sh
+  - bin/dependencies.sh
   - make -C project all
