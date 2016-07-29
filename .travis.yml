@@ -5,6 +5,7 @@ compiler:
   - gcc
   
 script:
+  - sudo apt-get install -y lcov
   - cmake --version
   - lcov --version
   - gcov --version
@@ -14,7 +15,10 @@ script:
   - tar -xzf /tmp/oclint-0.10.3.tar.gz
   - ln -s oclint-0.10.3 oclint
   - cd -
-  - ldd oclint/bin/oclint
-  - ls -l /lib/x86_64-linux-gnu/ 
+  - ldd ${HOME}/oclint/bin/oclint
+  - find /lib -name libstdc++*
+  - find /usr/lib -name libstdc++*
+  - ls -l /lib/x86_64-linux-gnu/
+  - ls -l /usr/lib/x86_64-linux-gnu/ 
   - cd project
   - make all
