@@ -14,20 +14,12 @@ matrix:
       env: COMPILER=g++-4.9
 
 script:
-  - cmake --version
-  - lcov --version
-  - gcov --version
-  - ${CXX} --version
+  - sudo -H pip install --upgrade pip
+  - sudo -H pip install gcovr
   - wget --quiet http://github.com/oclint/oclint/releases/download/v0.10.3/oclint-0.10.3-x86_64-linux-3.13.0-74-generic.tar.gz -O /tmp/oclint-0.10.3.tar.gz
   - cd ${HOME}
   - tar -xzf /tmp/oclint-0.10.3.tar.gz
   - ln -s oclint-0.10.3 oclint
   - cd -
-  - ldd ${HOME}/oclint/bin/oclint
-  - find /lib -name libstdc++*
-  - find /usr/lib -name libstdc++*
-  - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
-  - ls -l /lib/x86_64-linux-gnu/
-  - ls -l /usr/lib/x86_64-linux-gnu/ 
   - cd project
   - make all
