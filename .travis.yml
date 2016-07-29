@@ -6,6 +6,11 @@ matrix:
     - compiler: gcc
       env: COMPILER=g++-4.9
 
-script:
+before_install:
   - bin/dependencies.sh
-  - make -C project all
+    
+script:
+  - make all
+
+after_success:
+  - coveralls-lcov build/coverage/coverage.info

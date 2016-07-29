@@ -122,8 +122,8 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		MESSAGE(FATAL_ERROR "genhtml not found! Aborting...")
 	ENDIF() # NOT GENHTML_PATH
 
-	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.info")
-	SET(coverage_cleaned "${coverage_info}.cleaned")
+	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.raw")
+	SET(coverage_cleaned "${CMAKE_BINARY_DIR}/${_outputname}.info")
   
 	SEPARATE_ARGUMENTS(test_command UNIX_COMMAND "${_testrunner}")
 
@@ -131,29 +131,33 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 	ADD_CUSTOM_TARGET(${_targetname}
 
 		# Cleanup lcov
-		${LCOV_PATH} --directory . --zerocounters
+		${LCOV_PATH} --quiet --directory . --zerocounters
 
 		# Run tests
 		COMMAND ${test_command} ${ARGV3}
 
 		# Capturing lcov counters and generating report
-		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${coverage_info}
-		COMMAND ${LCOV_PATH} --remove ${coverage_info} 'tests/*' '/usr/*' 'gtest/*' --output-file ${coverage_cleaned}
-		COMMAND ${GENHTML_PATH} -o ${_outputname} ${coverage_cleaned}
-		#COMMAND ${CMAKE_COMMAND} -E remove ${coverage_info} ${coverage_cleaned}
+		COMMAND ${LCOV_PATH} --quiet --directory . --capture --output-file ${coverage_info}
+		COMMAND ${LCOV_PATH} --quiet --remove ${coverage_info} 'tests/*' '/usr/*' 'gtest/*' --output-file ${coverage_cleaned}
 
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-		COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
+		COMMENT "Capturing Code Coverage Data"
 	)
 
+    # Show summary code coverage info
+    ADD_CUSTOM_COMMAND(TARGET ${_targetname} POST_BUILD
+		COMMAND ${LCOV_PATH} --summary ${coverage_cleaned}
+		COMMENT "=> Code coverage Summary"
+	)
+	
 	# Show info where to find the report
 	ADD_CUSTOM_COMMAND(TARGET ${_targetname} POST_BUILD
-		COMMAND ;
-		COMMENT "Open ./${_outputname}/index.html in your browser to view the coverage report."
+		COMMAND ${GENHTML_PATH} --quiet -o html ${coverage_cleaned}
+		COMMENT "=> Full Code coverage report: ${CMAKE_BINARY_DIR}/html/index.html"
 	)
 
 ENDFUNCTION() # SETUP_TARGET_FOR_COVERAGE
-
+ 
 # Param _targetname     The name of new the custom make target
 # Param _testrunner     The name of the target which runs the tests
 # Param _outputname     cobertura output is generated as _outputname.xml

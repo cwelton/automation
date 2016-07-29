@@ -90,8 +90,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      sudo -H -u vagrant #{target_path}/bin/dependencies.sh
      echo "cd #{target_path}" >> #{home_dir}/.bashrc
   SHELL
-  
-  #config.vm.provision "shell", inline: "sudo -H -u vagrant /home/vagrant/github/bin/dependencies.sh"
 
-  #config.vm.provision :file, source: '.oclint', destination: '/home/vagrant/.oclint'
 end
