@@ -1,11 +1,21 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'pathname'
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 VAGRANTFILE_API_VERSION = "2"
+
+git_url           = `git ls-remote --get-url`.strip
+git_url_array     = Pathname(git_url).each_filename.to_a
+git_group         = git_url_array[-2]
+git_project       = git_url_array[-1].sub('.git','')
+home_dir          = "/home/vagrant"
+target_directory  = "#{home_dir}/#{git_group}"
+target_path       = "#{target_directory}/#{git_project}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -13,14 +23,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # boxes at https://atlas.hashicorp.com/search.
 
   # This box contains a basic travis environment
-  config.vm.box = 'minimal/trusty64'
-
+  config.vm.box = 'minimal/trusty64'  
+  
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.  
-  config.vm.synced_folder 'project', '/home/vagrant/project'
-
+  config.vm.synced_folder '.', '/vagrant'
   
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -70,11 +79,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", path: 'bin/dependencies.sh'
+  # Setup the home environment:
+  # 1. Attempt to make the directory structure as similar to travis-ci as possible
+  # 2. Ensure that the .oclint file is in the home directory
+  # 3. Ensure that `vagrant ssh` places us in the project directory
+  config.vm.provision "shell", inline: <<-SHELL
+     mkdir -p #{target_directory}
+     ln -s /vagrant #{target_path}
+     ln -s #{target_path}/.oclint #{home_dir}/.oclint
+     sudo -H -u vagrant #{target_path}/bin/dependencies.sh
+     echo "cd #{target_path}" >> #{home_dir}/.bashrc
+  SHELL
+  
+  #config.vm.provision "shell", inline: "sudo -H -u vagrant /home/vagrant/github/bin/dependencies.sh"
 
-  # Put the .oclint file in the vagrant home directory  
-  config.vm.provision :file, source: '.oclint', destination: '/home/vagrant/.oclint'
+  #config.vm.provision :file, source: '.oclint', destination: '/home/vagrant/.oclint'
 end
