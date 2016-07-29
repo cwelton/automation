@@ -11,6 +11,6 @@ before_install:
     
 script:
   - make all
-
-after_success:
   - coveralls-lcov build/coverage/coverage.info
+
+
