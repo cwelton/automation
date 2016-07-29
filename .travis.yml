@@ -6,7 +6,9 @@ compiler:
   
 script:
   - wget --quiet http://github.com/oclint/oclint/releases/download/v0.10.3/oclint-0.10.3-x86_64-linux-3.13.0-74-generic.tar.gz -O /tmp/oclint-0.10.3.tar.gz
+  - cd ${HOME}
   - tar -xzf /tmp/oclint-0.10.3.tar.gz
   - ln -s oclint-0.10.3 oclint
+  - cd -
   - cd project
   - make all
