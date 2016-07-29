@@ -122,7 +122,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		MESSAGE(FATAL_ERROR "genhtml not found! Aborting...")
 	ENDIF() # NOT GENHTML_PATH
 
-	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.raw")
+	SET(coverage_raw "${CMAKE_BINARY_DIR}/${_outputname}.raw")
 	SET(coverage_cleaned "${CMAKE_BINARY_DIR}/${_outputname}.info")
   
 	SEPARATE_ARGUMENTS(test_command UNIX_COMMAND "${_testrunner}")
@@ -137,8 +137,8 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		COMMAND ${test_command} ${ARGV3}
 
 		# Capturing lcov counters and generating report
-		COMMAND ${LCOV_PATH} --quiet --directory . --capture --output-file ${coverage_info}
-		COMMAND ${LCOV_PATH} --quiet --remove ${coverage_info} 'tests/*' '/usr/*' 'gtest/*' --output-file ${coverage_cleaned}
+		COMMAND ${LCOV_PATH} --quiet --directory . --capture --output-file ${coverage_raw}
+		COMMAND ${LCOV_PATH} --quiet --remove ${coverage_raw} 'test/*' '/usr/*' 'gtest/*' --output-file ${coverage_cleaned}
 
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		COMMENT "Capturing Code Coverage Data"

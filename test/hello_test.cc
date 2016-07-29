@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include "awesome.h"
 #include "gtest/gtest.h"
 
 namespace AutomationTest {
@@ -10,7 +12,7 @@ protected:
 };
 
 TEST_F(TestFixture, ExampleTest) {
-	int i = 0;
+	int i = do_something_awesome("unit_test");
     EXPECT_EQ(0, i);
 }
 
