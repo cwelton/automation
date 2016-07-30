@@ -3,8 +3,8 @@ automation [![Build Status](https://travis-ci.org/cwelton/automation.svg?branch=
 
 Small hello world application to test travis integration.
 
-This project has several goals:
-
+Goals
+----
 * Demonstrate building and running within travis-ci
 * Demonstrate a local environment running in Vagrant
 * Minimize delta between local Vagrant and travis environments without duplicating dependency logic
@@ -15,9 +15,8 @@ This project has several goals:
 * Demonstrate code coverage reporting and integration with coveralls.io
 
 
-Details:
-
-1. Demonstrate building and running within travis-ci
+Demonstrate building and running within travis-ci
+----
 
 Travis-ci (https://travis-ci.org/) provides a containerized build environment that can be run on every 
 checkin to the source and perform validation checks to ensure that the code is kept in an operational form.
@@ -32,9 +31,8 @@ In order to launch a travis build all that is required is enabling integration i
 a simple `git push`, after that everything runs automatically.
 
 
-
-
-2. Demonstrate a local environment running in Vagrant
+Demonstrate a local environment running in Vagrant
+----
 
 To help mitigate the frustrations of travis having a local interactive build and test environment as close
 to that of Travis as possible can be very useful. 
@@ -86,7 +84,8 @@ Which accomplishes setting up the directory structure for the Vagrant environmen
 directory structure.
 
 
-3. Minimize delta between local Vagrant and travis environments without duplicating dependency logic
+Minimize delta between local Vagrant and travis environments without duplicating dependency logic
+----
 
 Environment setup between both Vagrant and Travis environments has been centralized in `bin/dependencies.sh`.
 
@@ -108,8 +107,8 @@ fi
 Net net, is that having the local environment does not mean that the need to debug travis is gone completely,
 but it does help with a significant amount of local triage.
 
-
-4. Demonstrate C++ build with a modernish c++ compiler (C++11)
+Demonstrate C++ build with a modernish c++ compiler (C++11)
+----
 
 Travis comes with a variety of tools already installed, however the gcc/clang versions in particular are
 several years old, and insufficient when it comes to compiling modern c++ projects, e.g. c++11, or c++14.
@@ -140,7 +139,8 @@ Lines 6-8 set the default compiler to the newly installed one.  There may be a b
 especially if we wish to add support for a build matrix of different compilers in the future.
 
 
-5. Demonstrate integration with google test as a dependency managed by cmake
+Demonstrate integration with google test as a dependency managed by cmake
+----
 
 Googletest (https://github.com/google/googletest) support is implemented in `cmake/Modules/googletest.cmake`, 
 `CMakeLists.txt` and the code under `tests/`.  In particular the key logic is related to the download and 
@@ -149,7 +149,8 @@ install of the googletest framework.
 Note that `cmake/Modules/CodeCoverage.cmake` also required some specific additions to exclude the gtest framework 
 itself from the output of code coverage metrics.
 
-6. Demonstrate lint integration including checks for cyclomatic complexity using oclint
+Demonstrate lint integration including checks for cyclomatic complexity using oclint
+----
 
 Oclint (http://oclint.org/) is a static code analyis tool which provides mechanisms to verify several different
 types of issues with code including:
@@ -185,7 +186,8 @@ ln -s ${HOME}/oclint-0.10.3 ${HOME}/oclint
 ```
 
 
-7. Demonstrate code coverage collection via gcov and lcov
+Demonstrate code coverage collection via gcov and lcov
+----
 
 Code coverage collection is done with gcov and lcov and is accomplished primarily via configuration within 
 cmake. Most of the details can be found under `cmake/Modules/CodeCoverage.cmake` combined with the section
@@ -206,9 +208,8 @@ The basic mechanism is:
 - call `lcov --summary` to present the coverage summary statistics
 - call `genhtml` to generate html output of the coverage results
 
-
-
-8. Demonstrate code coverage reporting and integration with coveralls.io
+Demonstrate code coverage reporting and integration with coveralls.io
+----
 
 Finally in order to display the code coverage results in a more digestable location we use 
 coveralls-lcov (https://github.com/okkez/coveralls-lcov) to publish the lcov results to coveralls.io 
