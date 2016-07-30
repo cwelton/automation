@@ -12,7 +12,10 @@ protected:
 };
 
 TEST_F(TestFixture, ExampleTest) {
-	int i = do_something_awesome("unit_test");
+
+	// this use of auto is here primary to show that we are
+	// successfully building with C++11 support.
+	auto i = do_something_awesome("unit_test");
     EXPECT_EQ(0, i);
 }
 
