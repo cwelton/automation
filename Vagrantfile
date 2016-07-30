@@ -14,6 +14,7 @@ git_url_array     = Pathname(git_url).each_filename.to_a
 git_group         = git_url_array[-2]
 git_project       = git_url_array[-1].sub('.git','')
 home_dir          = "/home/vagrant"
+local_gitconfig   = File.expand_path('~/.gitconfig')
 target_directory  = "#{home_dir}/#{git_group}"
 target_path       = "#{target_directory}/#{git_project}"
 
@@ -91,4 +92,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      echo "cd #{target_path}" >> #{home_dir}/.bashrc
   SHELL
 
+  # Copy the current users .gitconfig if present
+  if File.file?(local_gitconfig) then
+     config.vm.provision :file, source: local_gitconfig, destination: '/home/vagrant/.gitconfig'
+  end
+  
 end
