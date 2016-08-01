@@ -27,7 +27,7 @@ if(COVERAGE)
 endif()
 
 # -- Setup include directory location ------------------------------------------
-include_directories( include )
+include_directories( . )
 
 # -- Setup testing dependencies ------------------------------------------------
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )

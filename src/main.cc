@@ -1,6 +1,13 @@
-#include "awesome.h"
+/** 
+ * main.cc
+ *
+ *   The core main function for the automation example project.
+ *
+ * Copyright 2016 Caleb Welton
+ **/
 
-int main() 
-{
-	return do_something_awesome("hello world!");
+#include "include/awesome.h"
+
+int main() {
+    return do_something_awesome("hello world!");
 }

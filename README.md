@@ -10,7 +10,7 @@ Goals
 * Minimize delta between local Vagrant and travis environments without duplicating dependency logic
 * Demonstrate C++ build with a modernish c++ compiler (C++11)
 * Demonstrate integration with google test as a dependency managed by cmake
-* Demonstrate lint integration including checks for cyclomatic complexity using oclint
+* Demonstrate lint integration including checks for cyclomatic complexity using oclint and cpplint
 * Demonstrate code coverage collection via gcov and lcov
 * Demonstrate code coverage reporting and integration with coveralls.io
 
@@ -74,7 +74,6 @@ block of the `Vagrantfile`:
   config.vm.provision "shell", inline: <<-SHELL
      mkdir -p #{target_directory}
      ln -s /vagrant #{target_path}
-     ln -s #{target_path}/.oclint #{home_dir}/.oclint
      sudo -H -u vagrant #{target_path}/bin/dependencies.sh
      echo "cd #{target_path}" >> #{home_dir}/.bashrc
   SHELL
@@ -149,7 +148,7 @@ install of the googletest framework.
 Note that `cmake/Modules/CodeCoverage.cmake` also required some specific additions to exclude the gtest framework 
 itself from the output of code coverage metrics.
 
-Demonstrate lint integration including checks for cyclomatic complexity using oclint
+Demonstrate lint integration including checks for cyclomatic complexity using oclint and cpplint
 ----
 
 Oclint (http://oclint.org/) is a static code analyis tool which provides mechanisms to verify several different
@@ -159,15 +158,10 @@ types of issues with code including:
   - various bad practices
   - etc
   
-The OClint toolchain is a little funky and requires a little extra contortion to employ.  Specifically the 
-`.oclint` control file provides configuration details, and it *must* be in the users ${HOME} directory. Which
-turns out to be slightly complex to arrange in Vagrant resulting in this line in the `Vagrantfile`
-```
-     ln -s #{target_path}/.oclint #{home_dir}/.oclint
-```
-This is a little easier in the travis case because when travis is executing we start in the correct directory.
-
-The other funkiness is that oclint is driven by a compile_commands.json file which is something that cmake 
+  
+cpplint (https://pypi.python.org/pypi/cpplint) is a python utility that verifies that code complies with the google c++ style guide (http://google.github.io/styleguide/cppguide.html)
+  
+The OClint toolchain is a little funky and requires a little extra contortion to employ.  Specifically oclint is driven by a compile_commands.json file which is something that cmake 
 can spit out (specifically via `set( CMAKE_EXPORT_COMPILE_COMMANDS ON )`, but the file must be in the root 
 directory of the project (it can't be under the cmake build/ directory). This is managed in the `Makefile` by 
 copying the compile\_commands.json file out of build/, running the lint, and then removing the
@@ -184,6 +178,11 @@ tar -C ${HOME} -xzf /tmp/oclint-0.10.3.tar.gz
 ln -s ${HOME}/oclint-0.10.3 ${HOME}/oclint
 
 ```
+
+cpplint is configured by the CPPLINT.cfg file. There is some redundancy between cpplint and oclint, 
+however both of them provide checks that the other does not.
+  * oclint provides important cyclomatic complexity metrics
+  * cpplint provides many more style checks
 
 
 Demonstrate code coverage collection via gcov and lcov

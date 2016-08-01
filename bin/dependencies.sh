@@ -8,9 +8,12 @@ sudo -E apt-get ${AG_FLAGS} install software-properties-common python-software-p
 sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
 sudo -E apt-get -yq update
 sudo -E apt-get ${AG_FLAGS} install gcc-4.9 g++-4.9 ggcov lcov cmake ruby rubygems-integration
+sudo -E apt-get ${AG_FLAGS} install python-dev python-pip
 sudo -E update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 50
 sudo -E update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50
 sudo -E update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.9 50
+sudo -H pip install --upgrade pip
+sudo -H pip install --upgrade cpplint
 
 if [ -z ${TRAVIS} ]; then
 	sudo gem install coveralls-lcov

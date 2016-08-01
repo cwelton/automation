@@ -10,7 +10,6 @@ before_install:
   - bin/dependencies.sh
     
 script:
+  - cpplint --recursive src include
   - make all
   - coveralls-lcov build/coverage/coverage.info
-
-

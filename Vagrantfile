@@ -87,7 +87,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: <<-SHELL
      mkdir -p #{target_directory}
      ln -s /vagrant #{target_path}
-     ln -s #{target_path}/.oclint #{home_dir}/.oclint
      sudo -H -u vagrant #{target_path}/bin/dependencies.sh
      echo "cd #{target_path}" >> #{home_dir}/.bashrc
   SHELL

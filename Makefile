@@ -1,7 +1,8 @@
 .PHONY: all clean release debug lint coverage
 
-LINT = ${HOME}/oclint/bin/oclint-json-compilation-database
-CMAKE = `which cmake`
+CPPLINT = `which cpplint`
+OCLINT  = ${HOME}/oclint/bin/oclint-json-compilation-database
+CMAKE   = `which cmake`
 
 all: lint coverage
 
@@ -20,8 +21,10 @@ debug:
 	$(MAKE) -C build/debug
 
 lint: compile_commands.json
-	@echo "-- Lint report written to: `pwd`/build/lint/lint.report"
-	@$(LINT) -e test 1> build/lint/lint.report 2>&1 && cat -s build/lint/lint.report \
+	@echo "-- Running cpplint"
+	@$(CPPLINT) --recursive src include test
+	@echo "-- Running oclint"
+	@$(OCLINT) -e test 1> build/lint/lint.report 2>&1 && cat -s build/lint/lint.report \
       || (rm compile_commands.json && cat -s build/lint/lint.report && exit 1)
 	@rm -rf compile_commands.json
 
