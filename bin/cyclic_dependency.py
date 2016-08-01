@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 # Script to do analyze the dependencies in Quickstep particularly cycles in the
 # dependency graph. This script can be used to find:
