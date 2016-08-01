@@ -14,6 +14,7 @@ sudo -E update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50
 sudo -E update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.9 50
 sudo -H pip install --upgrade pip
 sudo -H pip install --upgrade cpplint
+sudo -H pip install --upgrade networkx
 
 if [ -z ${TRAVIS} ]; then
 	sudo gem install coveralls-lcov

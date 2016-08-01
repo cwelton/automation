@@ -3,6 +3,8 @@
 CPPLINT = `which cpplint`
 OCLINT  = ${HOME}/oclint/bin/oclint-json-compilation-database
 CMAKE   = `which cmake`
+VALIDATE_CMAKELISTS = bin/validate_cmakelists.py
+CYCLIC_DEPENDENCY = bin/cyclic_dependency.py
 
 all: lint coverage
 
@@ -21,6 +23,10 @@ debug:
 	$(MAKE) -C build/debug
 
 lint: compile_commands.json
+	@echo "-- Running validate_cmakelists.py"
+	@$(VALIDATE_CMAKELISTS)
+	@echo "-- Running cyclic_dependency.py"
+	@$(CYCLIC_DEPENDENCY)
 	@echo "-- Running cpplint"
 	@$(CPPLINT) --recursive src include test
 	@echo "-- Running oclint"

@@ -1,0 +1,15 @@
+Automation
+Copyright 2016 Caleb Welton
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+
+This product contains a modified portion of the Apache Quickstep (incubating)
+project.
+
+  * LICENSE:
+     * license/LICENSE.quickstep.txt
+  * HOMEPAGE
+     * http://www.quickstep.io
+
