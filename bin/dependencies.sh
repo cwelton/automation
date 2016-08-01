@@ -23,7 +23,8 @@ sudo -E apt-get ${AG_FLAGS} install python2.7 python2.7-dev python-pip
 sudo -H pip install --upgrade pip
 sudo -H pip install cpplint
 sudo -H pip install networkx
-
+which pip
+pip show networkx
 
 wget --quiet http://github.com/oclint/oclint/releases/download/v0.10.3/oclint-0.10.3-x86_64-linux-3.13.0-74-generic.tar.gz -O /tmp/oclint-0.10.3.tar.gz
 tar -C ${HOME} -xzf /tmp/oclint-0.10.3.tar.gz
