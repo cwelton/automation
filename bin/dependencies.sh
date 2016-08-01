@@ -20,9 +20,9 @@ if [ -z ${TRAVIS} ]; then
     sudo -H pip install networkx
 else
     gem install coveralls-lcov
-	pip install --upgrade pip
-	pip install cpplint
-	pip install networkx
+	sudo -H `which pip` install --upgrade pip
+	sudo -H `which pip` install cpplint
+	sudo -H `which pip` install networkx
 fi
 pip show networkx
 
