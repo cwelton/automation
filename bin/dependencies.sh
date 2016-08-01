@@ -13,15 +13,16 @@ sudo -E update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50
 sudo -E update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.9 50
 
 if [ -z ${TRAVIS} ]; then
-    sudo -E apt-get ${AG_FLAGS} install python-dev python-pip
-    sudo -H pip install --upgrade pip
 	sudo gem install coveralls-lcov
 else
     gem install coveralls-lcov
 fi
 
-sudo -H pip install --upgrade cpplint
-sudo -H pip install --upgrade networkx
+# Python environment
+sudo -E apt-get ${AG_FLAGS} install python2.7 python2.7-dev python-pip
+sudo -H pip install --upgrade pip
+sudo -H pip install cpplint
+sudo -H pip install networkx
 
 
 wget --quiet http://github.com/oclint/oclint/releases/download/v0.10.3/oclint-0.10.3-x86_64-linux-3.13.0-74-generic.tar.gz -O /tmp/oclint-0.10.3.tar.gz
